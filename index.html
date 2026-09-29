@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#153e38">
+  <meta name="description" content="A little island. A new companion. Your own creature-catching adventure. Play Bloomwild in your browser.">
+  <title>Bloomwild — A little adventure</title>
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./styles.css">
+  <script src="./game-core.js" defer></script>
+  <script src="./game.js" defer></script>
+</head>
+<body>
+  <svg class="svg-library" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <symbol id="i-leaf" viewBox="0 0 24 24"><path d="M20 4C9 2 3 7 5 15c6 6 15 1 15-11Z"/><path d="m5 20 9-10M9 15v-5"/></symbol>
+    <symbol id="i-compass" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m16 8-2 6-6 2 2-6Z"/></symbol>
+    <symbol id="i-book" viewBox="0 0 24 24"><path d="M12 6C8 3 4 4 3 5v15c3-2 6-2 9 0 3-2 6-2 9 0V5c-3-2-6-1-9 1Zm0 0v14"/></symbol>
+    <symbol id="i-team" viewBox="0 0 24 24"><circle cx="9" cy="8" r="4"/><path d="M2 21v-3c0-6 14-6 14 0v3M17 4c5 0 5 8 0 8m2 3c3 1 3 3 3 6"/></symbol>
+    <symbol id="i-orb" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h6m6 0h6"/><circle cx="12" cy="12" r="3"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l2 2m10 10 2 2M5 19l2-2M17 7l2-2"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6"/></symbol>
+    <symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 21 3 12C-3 5 7-2 12 6c5-8 15-1 9 6Z"/></symbol>
+    <symbol id="i-camp" viewBox="0 0 24 24"><path d="m3 21 9-18 9 18ZM8 21l4-9 4 9M1 21h22"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+    <symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9 9c0-4 7-4 7 0 0 3-4 2-4 6m0 2v1"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M6 18 18 6"/></symbol>
+  </svg>
+  <header class="site-header">
+    <a class="brand" href="./" aria-label="Bloomwild home"><span class="brand-icon"><svg><use href="#i-leaf"/></svg></span><span>bloomwild<span class="brand-dot">.</span></span></a>
+    <nav aria-label="Game navigation">
+      <button class="nav-button active" id="explore-tab" aria-label="Explore"><svg aria-hidden="true"><use href="#i-compass"/></svg><span>Explore</span></button>
+      <button class="nav-button" id="journal-tab" aria-label="Field journal"><svg aria-hidden="true"><use href="#i-book"/></svg><span>Field journal</span><span class="nav-count" id="journal-count">0/8</span></button>
+      <button class="nav-button" id="team-tab" aria-label="My team"><svg aria-hidden="true"><use href="#i-team"/></svg><span>My team</span></button>
+    </nav>
+    <button class="icon-button help-button" id="help-button" aria-label="How to play"><svg><use href="#i-help"/></svg></button>
+  </header>
+
+  <main class="app-shell">
+    <section class="page-heading">
+      <div><div class="eyebrow"><span class="live-dot"></span> YOUR NEXT LITTLE ADVENTURE</div><h1>A world of wild possibilities.</h1><p>Wander a little. Make a friend. See what’s out there.</p></div>
+      <div class="island-stamp"><svg><use href="#i-sun"/></svg><span><strong>A perfect day to explore</strong><small>Fernveil Island · Early summer</small></span></div>
+    </section>
+
+    <div class="game-layout">
+      <section class="world-card" aria-label="Adventure map">
+        <div class="world-toolbar"><div class="location-title"><span class="location-icon"><svg><use href="#i-compass"/></svg></span><div><h2 id="location-name">Sunpetal Meadow</h2><span id="location-description">FERNVEIL ISLAND · THE FIRST CHAPTER</span></div></div><span class="weather"><svg><use href="#i-sun"/></svg> 24° <span>Sunny</span></span></div>
+        <div class="map-wrap" id="map-wrap">
+          <canvas id="world" width="1056" height="672" tabindex="0" aria-label="Fernveil Island map. Move with arrow keys or W A S D, or click a destination. Press E to interact near the camp, guide, or shrine."></canvas>
+          <div class="map-label"><span class="live-dot"></span><span id="map-status">Take the scenic route</span></div>
+          <div class="map-legend"><span class="legend-grass"></span> Wild friends hide in tall grass</div>
+          <div class="encounter-flash" id="encounter-flash"></div>
+          <section class="battle-view" id="battle-view" hidden aria-label="Creature battle">
+            <div class="battle-topline"><span class="eyebrow">A LITTLE WILD ENCOUNTER</span><span id="battle-terrain">Sunpetal Meadow</span></div>
+            <div class="battle-scene">
+              <div class="battle-stat enemy-stat" id="enemy-stat"></div>
+              <div class="battle-creature enemy-creature" id="enemy-art"></div>
+              <div class="battle-creature ally-creature" id="ally-art"></div>
+              <div class="battle-stat ally-stat" id="ally-stat"></div>
+              <div class="battle-ground enemy-ground"></div><div class="battle-ground ally-ground"></div>
+            </div>
+            <div class="battle-console"><p id="battle-message" role="status" aria-live="polite"></p><div class="battle-actions" id="battle-actions"></div></div>
+          </section>
+        </div>
+        <div class="world-footer"><div class="key-hints"><span><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> or arrows to move</span><span><kbd>E</kbd> interact</span><span class="click-hint">Click the map to wander</span></div><button class="text-button" id="interact-button">Interact <svg><use href="#i-arrow"/></svg></button></div>
+        <div class="touch-controls" aria-label="Touch movement controls"><div class="dpad"><button data-direction="up" aria-label="Move up">↑</button><button data-direction="left" aria-label="Move left">←</button><button data-direction="down" aria-label="Move down">↓</button><button data-direction="right" aria-label="Move right">→</button></div><span>Tap a spot on the map<br>or use these controls.</span></div>
+      </section>
+
+      <aside class="sidebar">
+        <section class="companion-card"><div class="section-label">YOUR ADVENTURE BUDDY <span class="small-dot"></span></div><div id="companion-content" class="companion-content"><div class="empty-companion">A new friendship is waiting.</div></div><button class="wide-button" id="manage-team">Meet your team <svg><use href="#i-arrow"/></svg></button></section>
+        <section class="quest-card"><div class="quest-icon"><svg><use href="#i-leaf"/></svg></div><div class="eyebrow">SMALL STEPS, BIG ADVENTURE</div><h3>A budding explorer</h3><p>Every great journey starts<br>with a little curiosity.</p><ul class="quest-list" id="quest-list"></ul><div class="quest-progress"><span id="quest-progress"></span></div><small id="quest-caption">Your story starts here</small></section>
+        <section class="bag-card"><div><svg><use href="#i-orb"/></svg><span><strong>Bloom capsules</strong><small>A little room for a new friend</small></span></div><strong id="capsule-count">10</strong></section>
+        <button class="camp-button" id="camp-button"><svg><use href="#i-camp"/></svg><span>Rest at camp<small>Heal your team & restock</small></span><svg><use href="#i-arrow"/></svg></button>
+      </aside>
+    </div>
+
+    <footer class="page-footer"><span><span class="save-dot" id="save-dot"></span><span id="save-status">Your adventure saves on this device</span></span><span>Made for the joy of getting a little lost.</span><button class="text-button" id="settings-button">Save options</button></footer>
+  </main>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <dialog id="game-dialog" aria-labelledby="dialog-title"><div id="dialog-content"></div></dialog>
+</body>
+</html>
